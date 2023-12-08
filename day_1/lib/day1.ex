@@ -1,7 +1,0 @@
-File.read!("input.txt")
-|> String.split("\n")
-|> Enum.map(fn line -> String.replace(line, ~r/[^0-9]/, "") end)
-|> Enum.reject(&(&1 == ""))
-|> Enum.map(fn entry -> String.first(entry) <> String.last(entry) end)
-|> Enum.map(&String.to_integer/1)
-|> Enum.sum()
