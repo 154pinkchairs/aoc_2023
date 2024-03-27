@@ -1,12 +1,17 @@
 (ns part1.core
   (:gen-class)
-  (:import [java.io BufferedReader FileReader]))
+  (:import [java.io BufferedReader FileReader]) (require '[clojure.string :as str]))
+
+(require '[clojure.string :as str])
 
 (defn read-schematic [^String filename]
   (with-open [rdr (BufferedReader. (FileReader. filename))]
     (doall (line-seq rdr))))
 
 (defn is-part-number? [schematic symbols x y]
+  ; declare number arrays per each line using str/split and filter not-empty
+  (let [number-array (filter (complement empty?) (str/split (nth schematic x) #"[^0-9]"))]
+    (some #(= % (get (get schematic x) y)) number-array))
   (let [directions [[-1 0] [1 0] [0 -1] [0 1] [-1 -1] [-1 1] [1 -1] [1 1]]
         height (count schematic)
         width (count (first schematic))
