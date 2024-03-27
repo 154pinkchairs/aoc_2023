@@ -11,13 +11,14 @@
         height (count schematic)
         width (count (first schematic))
         in-range? (fn [x y] (and (<= 0 x (dec height)) (<= 0 y (dec width))))
-        cell (get (get schematic x) y)]
+        cell (nth (nth schematic x) y)]
     (and cell
          (Character/isDigit ^Character cell)
          (some #(let [[dx dy] %
-                      [nx ny] [(+ x dx) (+ y dy)]]
-                  (and (in-range? nx ny)
-                       (contains? symbols (get (get schematic nx) ny))))
+                      [nx ny] [(+ x dx) (+ y dy)]
+                      adjacent-cell (if (in-range? nx ny) (nth (nth schematic nx) ny 0) nil)]
+                  (and adjacent-cell
+                       (contains? symbols adjacent-cell)))
                directions))))
 
 (defn sum-part-numbers [^String filename]
@@ -30,6 +31,6 @@
     (reduce + (for [x (range height)
                     y (range width)
                     :when (is-part-number? schematic symbols x y)]
-                (- (int (get (get schematic x) y)) 48)))))
+                (- (int (get (get schematic x) y \0)) 48)))))
 
 (println (sum-part-numbers "input.txt"))
