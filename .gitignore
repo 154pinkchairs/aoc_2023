@@ -1,0 +1,5 @@
+.clj-kondo
+day_3/.lsp
+day_3/src/.lsp
+day_3/target
+.lsp
