@@ -35,10 +35,7 @@
   (with-open [rdr (io/reader filename)]
     (->> (line-seq rdr)
          (map parse-card)
-         (remove nil?)
          (map calc-points)
-         (remove nil?)
-         (remove zero?)
          (reduce +))))
 
-(println (solve "input.txt"))
+(println (solve "head.txt"))
